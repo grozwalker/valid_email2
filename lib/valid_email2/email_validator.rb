@@ -25,6 +25,10 @@ module ValidEmail2
         error(record, attribute) && return if addresses.any?(&:subaddressed?)
       end
 
+      if options[:disallow_consecutive]
+        error(record, attribute) && return if addresses.any?(&:consecutive?)
+      end
+
       if options[:disposable]
         error(record, attribute) && return if addresses.any?(&:disposable?)
       end

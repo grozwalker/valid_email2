@@ -9,6 +9,7 @@ module ValidEmail2
     PROHIBITED_DOMAIN_CHARACTERS_REGEX = /[+!_\/\s'`]/
     DEFAULT_RECIPIENT_DELIMITER = '+'.freeze
     DOT_DELIMITER = '.'.freeze
+    DOTS_CONSECUTIVELY = '..'.freeze
 
     def self.prohibited_domain_characters_regex
       @prohibited_domain_characters_regex ||= PROHIBITED_DOMAIN_CHARACTERS_REGEX
@@ -54,6 +55,10 @@ module ValidEmail2
 
     def dotted?
       valid? && address.local.include?(DOT_DELIMITER)
+    end
+
+    def consecutive?
+      valid? && address.local.include?(DOTS_CONSECUTIVELY)
     end
 
     def subaddressed?

@@ -11,6 +11,10 @@ class TestUserDotted < TestModel
   validates :email, 'valid_email_2/email': { disallow_dotted: true }
 end
 
+class TestUserConsecutive < TestModel
+  validates :email, 'valid_email_2/email': { disallow_consecutive: true }
+end
+
 class TestUserSubaddressing < TestModel
   validates :email, 'valid_email_2/email': { disallow_subaddressing: true }
 end
@@ -219,6 +223,13 @@ describe ValidEmail2 do
 
     it "is invalid when address cotains dots" do
       user = TestUserDotted.new(email: "john.doe@gmail.com")
+      expect(user.valid?).to be_falsey
+    end
+  end
+
+  describe "with consecutive validation" do
+    it "is invalid when address cotains consecutive dots" do
+      user = TestUserConsecutive.new(email: "john..doe@gmail.com")
       expect(user.valid?).to be_falsey
     end
   end
